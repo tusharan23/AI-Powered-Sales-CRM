@@ -1,0 +1,4 @@
+client_name,company,deal_value,deal_stage,technical_requirements,priority,next_action
+Alice Johnson,Acme Corp,50000,Qualified,Need API integration and SSO,Medium,Schedule technical call
+Bob Smith,Globex Inc,120000,Proposal,Custom reporting and analytics required,High,Send pricing proposal
+Carol Williams,Initech,75000,Negotiation,Migration from legacy system,Medium,Discuss migration timeline

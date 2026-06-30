@@ -1,0 +1,12 @@
+client_name,company,deal_value,deal_stage,technical_requirements,priority,next_action
+Rahul Sharma,ABC Technologies,50000,Proposal,AI chatbot for customer support with deployment within two weeks,High,Send proposal tomorrow
+Unknown,Unknown,50000,Proposal,"AI chatbot for customer support, 2-week deployment timeline",High,Send Proposal
+Rahul Sharma,ABC Technologies,50000,Qualified,AI customer support chatbot integrated into website,High,Send detailed proposal tomorrow
+Rahul Sharma,ABC Technologies,50000,Proposal,AI customer support chatbot integrated into website,High,Send detailed proposal tomorrow
+Rahul Sharma,ABC Technologies,50000,Proposal,AI customer support chatbot integrated into website,High,Send detailed proposal tomorrow
+Rahul Sharma,ABC Technologies,75000,Proposal,"CRM integration, multilingual support, analytics dashboard, deployment within the next two weeks",High,Send Proposal
+Rahul Sharma,ABC Technologies,50000,Proposal,"AI chatbot for customer support that can answer FAQs, collect leads, and integrate with their website.",High,Send Proposal
+Rahul Sharma,ABC Technologies,75000,Proposal,"AI-powered CRM system to automate lead management, prioritize sales opportunities, generate follow-up emails, and provide analytics dashboards.",High,Send Proposal and Schedule Demo
+Rahul Sharma,ABC Technologies,75000,Proposal,"AI-powered CRM system to automate lead management, prioritize sales opportunities, generate follow-up emails, and provide analytics dashboards.",High,Send Proposal & Schedule Demo
+Rahul Sharma,ABC Technologies,75000,Proposal,"AI-powered CRM system to automate lead management, prioritize sales opportunities, generate follow-up emails, and provide analytics dashboards.",High,Send Proposal
+Rajesh Kumar,Secure Bank,250000,Proposal,"AI chatbot for customer support, loan inquiries, and fraud detection. Must integrate with their CRM and mobile banking application.",High,Send Proposal
