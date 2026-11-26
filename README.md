@@ -11,7 +11,7 @@ Sales teams spend a lot of time manually entering meeting details into CRM syste
 | Module | Functionality |
 | --- | --- |
 | Dashboard | Track total leads, pipeline value, high-priority deals, weighted revenue forecasts, and sales insights. |
-| AI Studio | Extract lead details from meeting notes using Gemini 2.5 Flash and generate editable follow-up emails. |
+| AI Studio | Extract lead details from meeting notes using Gemini 3.8 Flash and generate editable follow-up emails. |
 | Leads & Pipeline | Search, filter, sort, add, delete, and update leads. View deal stages in a Kanban board and export data as CSV. |
 | Tasks | Create and assign tasks, set deadlines, update status, and track overdue work. |
 | Activity | View a timestamped history of CRM actions. |
@@ -37,7 +37,7 @@ The scores and forecasts are rule-based estimates, not predictions from a traine
 
 - Python 3.11
 - Streamlit — web application and dashboard
-- Google Gemini 2.5 Flash — lead extraction and email generation
+- Google Gemini 3.8 Flash — lead extraction and email generation
 - Pandas — data processing
 - Pydantic — structured lead data model
 - CSV — local data storage
