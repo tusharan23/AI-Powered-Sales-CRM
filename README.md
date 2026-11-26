@@ -25,6 +25,13 @@ Sales teams spend a lot of time manually entering meeting details into CRM syste
 5. Gemini generates a personalized follow-up email that can be edited and downloaded.
 6. The dashboard displays updated pipeline metrics and sales opportunities.
 
+## AI Reliability
+
+- Transient Gemini server errors trigger bounded retries with increasing delays.
+- If the primary model remains unavailable, the app automatically tries Gemini 3.5 Flash-Lite.
+- If email generation fails after saving a lead, retry the email separately without creating a duplicate lead.
+- API key and quota errors are not repeatedly retried.
+
 ## Sales Analytics
 
 - Lead scoring: based on deal priority and deal value.
@@ -37,7 +44,7 @@ The scores and forecasts are rule-based estimates, not predictions from a traine
 
 - Python 3.11
 - Streamlit — web application and dashboard
-- Google Gemini 3.8 Flash — lead extraction and email generation
+- Google Gemini 3.8 Flash — lead extraction and email generation, with Gemini 3.5 Flash-Lite as an automatic backup
 - Pandas — data processing
 - Pydantic — structured lead data model
 - CSV — local data storage
@@ -103,6 +110,8 @@ To test AI Studio, configure a Gemini API key and select **Use sample notes**, t
 AI-Powered-Sales-CRM/
 ├── app.py                  # Streamlit application and AI workflow
 ├── main.py                 # Demo data and activity logging
+├── gemini_retry.py          # Automatic retries and model failover
+├── test_gemini_retry.py     # Mocked retry and fallback tests
 ├── datastore/
 │   └── database.py         # CSV data operations
 ├── ui/

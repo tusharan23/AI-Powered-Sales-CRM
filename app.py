@@ -34,6 +34,7 @@ st.set_page_config(
 from datastore import database  # noqa: E402
 from main import seed_demo_data, log_action  # noqa: E402
 from ui import components as ui  # noqa: E402
+from gemini_retry import generate_with_retry, error_code, RETRYABLE_CODES  # noqa: E402
 
 API_KEY = os.getenv("GEMINI_API_KEY")
 AI_READY = bool(API_KEY) and API_KEY != "YOUR_GEMINI_API_KEY" and genai is not None
@@ -67,7 +68,7 @@ LEAD_COLUMNS = [
 ]
 
 # ==========================================================
-# AI ENGINE (same prompts / model as before)
+# AI ENGINE (with retries and model fallback)
 # ==========================================================
 
 LEAD_EXTRACTION_PROMPT = """
@@ -158,9 +159,8 @@ def extract_lead_info(text: str):
     if not text.strip() or client is None:
         return None
     try:
-        response = client.models.generate_content(
-            model="gemini-3.8-flash",
-            contents=LEAD_EXTRACTION_PROMPT + "\n\n" + text,
+        response = generate_with_retry(
+            client, LEAD_EXTRACTION_PROMPT + "\n\n" + text, notify=st.write,
         )
         try:
             data = json.loads(clean_json(response.text))
@@ -181,10 +181,12 @@ def extract_lead_info(text: str):
             next_action=data.get("next_action", ""),
         )
     except Exception as e:
-        if "429" in str(e):
+        if error_code(e) == 429:
             st.error("⚠️ Gemini API quota exceeded. Check your key or billing in Google AI Studio.")
+        elif error_code(e) in RETRYABLE_CODES or error_code(e) == 404:
+            st.error("Both Gemini models are currently unavailable. Please try again later. Your meeting notes are still here.")
         else:
-            st.error(f"AI error: {e}")
+            st.error("AI analysis failed. Please check your Gemini configuration or try again.")
     return None
 
 
@@ -200,7 +202,7 @@ Current Stage: {lead.deal_stage}
 Priority: {lead.priority}
 Next Action: {lead.next_action}
 """
-    response = client.models.generate_content(model="gemini-3.8-flash", contents=prompt)
+    response = generate_with_retry(client, prompt, notify=st.write)
     return response.text
 
 
@@ -411,8 +413,10 @@ def page_ai_studio():
                         st.session_state.email = generate_followup_email(lead)
                     except Exception:
                         st.session_state.email = ""
-                        st.error("The AI service is busy right now. Click **Analyze meeting** again in a few seconds.")
-                    status.update(label="Analysis complete", state="complete", expanded=False)
+                        st.error("Lead saved. Email generation failed. Use **Retry follow-up email** below instead of analyzing the meeting again.")
+                        status.update(label="Lead saved; email unavailable", state="error")
+                    else:
+                        status.update(label="Analysis complete", state="complete", expanded=False)
 
     lead = st.session_state.get("latest_lead")
     if lead:
@@ -431,6 +435,14 @@ def page_ai_studio():
                  f'<div class="callout">🚀 <b>Recommended next action:</b> {ui.esc(lead.next_action)}</div>')
         html(ui.section("Latest analysis"))
         html(ui.card(inner, "Lead added to your CRM", "Score reflects priority and deal size"))
+
+    if lead and not st.session_state.get("email") and AI_READY:
+        if st.button("Retry follow-up email", key="retry_followup_email"):
+            with st.spinner("Generating follow-up email…"):
+                try:
+                    st.session_state.email = generate_followup_email(lead)
+                except Exception:
+                    st.error("Email generation is still unavailable. Your lead is saved.")
 
     if "email" in st.session_state and st.session_state.email:
         html(ui.section("Follow-up email"))
