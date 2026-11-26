@@ -159,7 +159,7 @@ def extract_lead_info(text: str):
         return None
     try:
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-3.8-flash",
             contents=LEAD_EXTRACTION_PROMPT + "\n\n" + text,
         )
         try:
@@ -200,7 +200,7 @@ Current Stage: {lead.deal_stage}
 Priority: {lead.priority}
 Next Action: {lead.next_action}
 """
-    response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
+    response = client.models.generate_content(model="gemini-3.8-flash", contents=prompt)
     return response.text
 
 
