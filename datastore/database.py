@@ -142,3 +142,48 @@ class ExecutionTasksDB:
             TASKS_FILE,
             index=False
         )
+
+# ----------------------------------------------------------
+# Extra helpers used by the redesigned UI
+# (appended so the original classes above stay untouched)
+# ----------------------------------------------------------
+
+def _leads_delete(index: int):
+    """Delete a lead by its row position."""
+    CRMLeadsDB._ensure_file()
+    df = pd.read_csv(LEADS_FILE)
+    if 0 <= index < len(df):
+        df = df.drop(df.index[index]).reset_index(drop=True)
+        df.to_csv(LEADS_FILE, index=False)
+
+
+def _leads_update_stage(index: int, new_stage: str):
+    """Change the deal stage of a lead by its row position."""
+    CRMLeadsDB._ensure_file()
+    df = pd.read_csv(LEADS_FILE)
+    if 0 <= index < len(df):
+        df.loc[df.index[index], "deal_stage"] = new_stage
+        df.to_csv(LEADS_FILE, index=False)
+
+
+def _tasks_update_status(index: int, new_status: str):
+    """Change the status of a task by its row position."""
+    ExecutionTasksDB._ensure_file()
+    df = pd.read_csv(TASKS_FILE)
+    if 0 <= index < len(df):
+        df.loc[df.index[index], "status"] = new_status
+        df.to_csv(TASKS_FILE, index=False)
+
+
+def _tasks_delete(index: int):
+    ExecutionTasksDB._ensure_file()
+    df = pd.read_csv(TASKS_FILE)
+    if 0 <= index < len(df):
+        df = df.drop(df.index[index]).reset_index(drop=True)
+        df.to_csv(TASKS_FILE, index=False)
+
+
+CRMLeadsDB.delete = staticmethod(_leads_delete)
+CRMLeadsDB.update_stage = staticmethod(_leads_update_stage)
+ExecutionTasksDB.update_status = staticmethod(_tasks_update_status)
+ExecutionTasksDB.delete = staticmethod(_tasks_delete)

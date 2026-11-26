@@ -3,3 +3,6 @@ __pycache__/
 .env
 .DS_Store
 activity_log.txt
+venv/
+.venv/
+.streamlit/secrets.toml
