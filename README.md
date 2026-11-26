@@ -1,159 +1,131 @@
-# 🤖 AI Sales CRM
+# AI-Powered Sales CRM
 
-An intelligent, AI-powered Customer Relationship Management system that automates lead extraction, prioritization, and sales follow-up using Google's Gemini AI.
+A sales management application that uses Google Gemini AI to turn unstructured meeting notes into actionable CRM records. It helps sales teams manage leads, track deals, generate follow-up emails, and organize their daily tasks in one place.
 
 ## Problem Statement
 
-Traditional CRMs require manual data entry and lack intelligent insights. Sales teams spend valuable time updating records instead of closing deals. This project solves that by using AI to automatically extract structured lead information from meeting notes, prioritize opportunities, and generate personalized follow-up emails.
+Sales teams spend a lot of time manually entering meeting details into CRM systems, updating deal stages, and writing follow-up emails. This project reduces repetitive work by automating these steps and providing a central dashboard for tracking sales opportunities.
 
-## Features
+## Key Features
 
-### 🎯 AI-Powered Lead Extraction
-- Automatically extract structured CRM data from unstructured meeting notes
-- Identifies client name, company, deal value, stage, technical requirements, priority, and next actions
-- Uses Google Gemini 2.5 Flash for accurate information extraction
+| Module | Functionality |
+| --- | --- |
+| Dashboard | Track total leads, pipeline value, high-priority deals, weighted revenue forecasts, and sales insights. |
+| AI Studio | Extract lead details from meeting notes using Gemini 2.5 Flash and generate editable follow-up emails. |
+| Leads & Pipeline | Search, filter, sort, add, delete, and update leads. View deal stages in a Kanban board and export data as CSV. |
+| Tasks | Create and assign tasks, set deadlines, update status, and track overdue work. |
+| Activity | View a timestamped history of CRM actions. |
 
-### 📊 Intelligent Dashboard
-- Real-time pipeline metrics and analytics
-- Total leads tracking and pipeline value calculation
-- High-priority lead identification
-- Visual analytics with deal stage and priority distribution charts
+## How It Works
 
-### 🧠 AI Sales Intelligence
-- Automatic lead scoring based on priority
-- Win probability estimation
-- AI-reasoned recommendations for next actions
-- Best opportunity identification
+1. Enter meeting notes in AI Studio.
+2. Gemini extracts the client name, company, deal value, stage, requirements, priority, and recommended next action.
+3. The structured lead is saved to the CRM.
+4. The application calculates a lead score and estimated win probability using rule-based logic.
+5. Gemini generates a personalized follow-up email that can be edited and downloaded.
+6. The dashboard displays updated pipeline metrics and sales opportunities.
 
-### 📧 Automated Follow-Up Emails
-- AI-generated professional follow-up emails
-- Context-aware content based on meeting details
-- One-click email download
+## Sales Analytics
 
-### 📝 Activity Logging
-- Automatic audit trail of all CRM actions
-- Timestamped activity history
-- Transparent tracking of data changes
+- Lead scoring: based on deal priority and deal value.
+- Win probability: estimated using deal stage and priority.
+- Weighted revenue forecast: sum of each open deal's value multiplied by its estimated win probability.
 
-### 🔍 Smart Search
-- Instant search across client names and companies
-- Filter leads in real-time
+The scores and forecasts are rule-based estimates, not predictions from a trained machine learning model.
 
-## Screenshots
+## Tech Stack
 
-*Add screenshots of your application here*
+- Python 3.11
+- Streamlit — web application and dashboard
+- Google Gemini 2.5 Flash — lead extraction and email generation
+- Pandas — data processing
+- Pydantic — structured lead data model
+- CSV — local data storage
+- HTML and CSS — custom user interface
 
-```
-Recommended screenshots:
-1. Main dashboard with metrics
-2. Meeting notes input and AI analysis
-3. CRM leads table with search
-4. Pipeline analytics charts
-5. AI-generated follow-up email
-```
+## Installation and Setup
 
-## Installation
+### 1. Clone the repository
 
-### Prerequisites
-- Python 3.8 or higher
-- pip package manager
-- Google AI Studio API key ([Get one here](https://aistudio.google.com/app/apikey))
-
-### Setup Steps
-
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd lemma-crm
-   ```
-
-2. **Create virtual environment** (recommended)
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configure environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-   
-   Edit `.env` and add your Gemini API key:
-   ```
-   GEMINI_API_KEY=your_actual_api_key_here
-   ```
-
-## Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `GEMINI_API_KEY` | Your Google Gemini AI API key from Google AI Studio | Yes |
-
-## Running the Project
-
-### Initialize Demo Data
-First, seed the database with sample data:
 ```bash
-python main.py
+git clone https://github.com/tusharan23/AI-Powered-Sales-CRM.git
+cd AI-Powered-Sales-CRM
 ```
 
-### Launch the Application
-Start the Streamlit web interface:
+### 2. Create and activate a virtual environment
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+On Windows, activate it with `venv\Scripts\activate`.
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure the Gemini API key
+
+Get an API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` and replace the placeholder with your own key:
+
+```env
+GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+```
+
+Never commit your `.env` file to GitHub. The non-AI parts of the CRM work without an API key.
+
+### 5. Run the application
+
 ```bash
 streamlit run app.py
 ```
 
-The application will open in your default browser at `http://localhost:8501`
+Open [http://localhost:8501](http://localhost:8501) in your browser.
 
-### Using the Application
-1. **Load Demo Data**: Click "Load Demo Data" in the sidebar to populate sample leads
-2. **Analyze Meeting Notes**: Paste meeting notes in the text area and click "Analyze Meeting"
-3. **View Results**: AI will extract lead information and display it in the dashboard
-4. **Generate Email**: After analysis, an AI-generated follow-up email will appear
-5. **Search Leads**: Use the search bar to filter leads by client or company
-6. **Download Email**: Click "Download Email" to save the generated follow-up
+## Try the Demo
 
-## Technologies Used
+Use the sidebar to select **Replace data with demo set**, then click **Load demo data**. This replaces existing local lead and task records.
 
-- **Python 3.8+** - Core programming language
-- **Streamlit** - Web application framework
-- **Google Generative AI (Gemini 2.5 Flash)** - AI/ML engine for lead extraction and email generation
-- **Pandas** - Data manipulation and analysis
-- **Pydantic** - Data validation and settings management
-- **python-dotenv** - Environment variable management
+To test AI Studio, configure a Gemini API key and select **Use sample notes**, then click **Analyze meeting**.
+
+## Project Structure
+
+```text
+AI-Powered-Sales-CRM/
+├── app.py                  # Streamlit application and AI workflow
+├── main.py                 # Demo data and activity logging
+├── datastore/
+│   └── database.py         # CSV data operations
+├── ui/
+│   ├── components.py       # Reusable UI and scoring functions
+│   └── styles.css          # Dashboard styling
+├── knowledge_base/         # Supporting project module
+├── .streamlit/
+│   └── config.toml         # Streamlit theme configuration
+├── CRM_Leads.csv           # Lead records
+├── Execution_Tasks.csv     # Task records
+├── requirements.txt       # Python dependencies
+├── .env.example            # API key configuration template
+└── README.md
+```
 
 ## Future Improvements
 
-- [ ] Multi-language support for global sales teams
-- [ ] Integration with popular CRM platforms (Salesforce, HubSpot)
-- [ ] Email sending integration (Gmail, Outlook)
-- [ ] Advanced analytics and forecasting
-- [ ] Lead scoring based on historical data
-- [ ] Voice note transcription support
-- [ ] Team collaboration features
-- [ ] Mobile-responsive design
-- [ ] Export leads to CSV/Excel
-- [ ] Automated reminder scheduling
+- Replace CSV storage with a relational database.
+- Add user authentication and role-based access.
+- Detect duplicate leads before saving.
+- Integrate email services for sending follow-ups directly.
+- Improve sales forecasts using historical deal outcomes.
 
-## Files to Exclude from GitHub
+## Author
 
-The following files should NOT be committed to GitHub (already in .gitignore):
-
-- `__pycache__/` - Python bytecode cache
-- `.env` - Contains sensitive API keys
-- `activity_log.txt` - Runtime activity logs
-- `test_api.py` - API testing script
-- `test_flash.py` - Model testing script
-
-## License
-
-This project is licensed under the MIT License - feel free to use it for your hackathon projects and beyond.
-
----
-
-**Built with ❤️ for Hackathon 2024**
+Tushar Chaube
